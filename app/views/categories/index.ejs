@@ -1,0 +1,81 @@
+<!-- views/index.ejs -->
+<% layout('../boilerplate') -%>
+<div class="row">
+  <div class="col-xl-12 col-lg-12">
+    <h2>Add Category</h2>
+    <% if(errors) { %>
+      <% for(let i = 0; i < errors.length; i++) { %>
+        <p class="alert alert-danger"><%= errors[i].msg %></p>
+      <% } %>
+    <% } %>
+    
+    <% if(exists) { %>
+      <p class="alert alert-success">Name category existed</p>
+    <% } %>
+
+    <form method="POST" action="/category-add">
+      <div class="form-group">
+        <label for="nameCate">Name category</label>
+        <input type="text" class="form-control" id="nameCate" name="nameCate" placeholder="Enter name categorie">
+      </div>
+      <div class="form-group">
+        <label for="parentId">Parent Category</label>
+        <select class="form-control" id="parentId" name="parentId">
+          <option value="0"> -- Root --</option>
+          <% if(cate) { %>
+            <% for(let i = 0; i < cate.length; i++) { %>
+              <option value="<%= cate[i].id %>"><%= cate[i].name %></option>
+              <% if(cate[i].children) { %>
+                <% let childrenCate =  cate[i].children; %>
+                <% for( let j = 0; j < childrenCate.length; j++ ) { %>
+                <option value="<%= childrenCate[j].id %>">&nbsp;&nbsp;&nbsp; --- <%= childrenCate[j].name %></option>
+                <% } %>
+              <% } %>
+            <% } %>
+          <% } %>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Add</button>
+    </form>
+  </div>
+</div>
+<hr class="sidebar-divider my-3">
+<div class="row">
+  <div class="col-xl-12 col-lg-12">
+    <h2 class="text-center">List Categories</h2>
+    <% if(success) { %>
+      <p class="alert alert-success">Add successful</p>
+    <% } %>
+    <% if(listCate) { %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col" clospan="2" width="3%">action</th>
+        </tr>
+      </thead>
+      <tbody>
+          <% for(let i = 0; i < listCate.length; i++) { %>
+          <tr>
+            <td><%= listCate[i].id %></td>
+            <td>
+            <% if(listCate[i].id == listCate[i].parent_id) { %>
+              <p style="margin-left: 50xp;"> --- <%= listCate[i].name %></p>
+            <% } else{ %>
+              <p><%= listCate[i].name %></p>
+            <% } %>
+            </td>
+            <td>
+              <a class="btn btn-primary" href="#"> Edit</a>
+            </td>
+            <td>
+              <a class="btn btn-primary" href="#"> Delete</a>
+            </td>
+          </tr>
+          <% } %>
+      </tbody>
+    </table>
+    <% } %>
+  </div>
+</div>

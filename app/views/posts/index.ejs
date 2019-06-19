@@ -1,0 +1,58 @@
+<% layout('../boilerplate') -%>
+<% script('/js/ckeditor5.js') -%>
+<% script('/js/post-tags.js') -%>
+<% script('/js/upload-avatar.js') -%>
+<form action="/create-post" method="post" enctype="multipart/form-data">
+    <div class="row border py-3">
+        <div class="col-xl-9 col-lg-9 border-right">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" name="title">
+            </div>
+            <div class="form-group">
+                <label for="sapo">Sapo</label>
+                <textarea class="form-control" id="sapo" rows="3" name="sapo"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="avatar">Avatar</label>
+                <%/* <input type="file" name="avatar" id="avatar" class="form-control" accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"/> */%>
+                <input type="file" name="avatar" id="avatar" class="form-control"/>
+                <input type="hidden" name="hiddenAvatar" id="hiddenAvatar" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <img src="" alt="avatar" id="avatar_2">
+            </div>
+            <div class="form-group">
+                <label for="content">Content</label>
+                <textarea  class="form-control" rows="10" id="content" name="data-content"></textarea>
+            </div>
+        </div>
+        <div class="col-xl-3 col-lg-3">
+            <div class="form-group">
+                <label for="language">Language</label>
+                <select class="form-control" id="language" name="language">
+                    <option value="0"> Vietnamese</option>
+                    <option value="1"> English</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="categories">Categories</label>
+                <select class="form-control" id="categories" name="categories">
+                    <option value=""> --- categories -- </option>
+                    <% for(let i = 0; i < listCate.length; i++) { %>
+                    <option value="<%= listCate[i].id %>"><%= listCate[i].name %></option>
+                    <% } %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tags">Tags</label>
+                <input type="text" class="form-control" id="tags" name="tags">
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="publishPost" checked="checked"> 
+                <label class="form-check-label" for="publishPost" name="publishPost"><b>Publish Post</b></label>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</form>
