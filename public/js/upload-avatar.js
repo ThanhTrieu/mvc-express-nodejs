@@ -12,10 +12,13 @@ $(function(){
             contentType: false,
             success: function(r){
                 console.log("result",r);
-                $('#avatar_2').attr('src', '/storage/images/' + r.result);
+                $('#avatar_2').attr('src', r.pathView);
+                $('#hiddenAvatar').val(r.nameFile);
             },
             error: function (e) {
                 console.log("some error", e);
+                $('#avatar_2').attr('src', '');
+                $('#hiddenAvatar').val('');
             }
         });
     });

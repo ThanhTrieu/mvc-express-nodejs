@@ -5,6 +5,7 @@ const dashboard = require('../app/controllers/dashboard');
 const cate = require('../app/controllers/cate');
 const posts = require('../app/controllers/post');
 const tags = require('../app/controllers/tags');
+const test = require('../app/controllers/test');
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -71,7 +72,7 @@ module.exports = function(app, passport) {
 	app.post('/create-post', isLoggedIn, posts.createPost);
 	app.post('/upload-avatar', isLoggedIn, posts.upLoadAvatar);
 	// app.get('/edit-post/:slug/:idPost', isLoggedIn, posts.createPost);
-
+	app.post('/post', isLoggedIn, test.createPostv2);
 	// =====================================
 	// TAG PAGE ========
 	// =====================================

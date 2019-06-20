@@ -12,7 +12,7 @@ const connection = mysql.createConnection(dbconfig.connection);
 connection.query(`USE ${dbconfig.database}`);
 
 // expose this function to our app using module.exports
-module.exports = function(passport) {
+module.exports = function(passport, app) {
 
     // =========================================================================
     // passport session setup ==================================================
@@ -103,6 +103,7 @@ module.exports = function(passport) {
                 req.session.id   = rows[0].id;
                 req.session.role = rows[0].role;
                 // all is well, return successful user
+                app.locals.usernameGolbal = rows[0].username;
                 return done(null, rows[0]);
             });
         })

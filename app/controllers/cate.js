@@ -5,7 +5,6 @@ exports.index = (req, res) => {
     cateModel.getCategoryToTree((result, rows) => {
         const data = {
             title: 'Categories',
-            user: req.session.user,
             success: req.session.success,
             exists: req.session.existName,
             errors: req.session.errors,

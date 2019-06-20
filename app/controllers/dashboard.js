@@ -1,7 +1,6 @@
 exports.index = (req, res) => {  
     const header = {
-        title: 'Dashboard',
-        user: req.session.user
+        title: 'Dashboard'
     }  
     res.render('home/index', header);
 }
