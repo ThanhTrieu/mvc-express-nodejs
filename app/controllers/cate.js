@@ -1,19 +1,31 @@
+"use strict";
+
 const urlSlug = require('url-slug');
 const cateModel = require('../models/category');
 
-exports.index = (req, res) => {  
-    cateModel.getCategoryToTree((result, rows) => {
-        const data = {
-            title: 'Categories',
-            success: req.session.success,
-            exists: req.session.existName,
-            errors: req.session.errors,
-            cate: result,
-            listCate: rows
-        }  
-        res.render('categories/index', data);
-    })
+exports.index = async (req, res) => {  
+    let cates = [];
+    let listCates = [];
+
+    await cateModel.getCategoryToTree()
+    .then((result) => {
+        cates = result;
+    });
+
+    await cateModel.getCategories()
+    .then((rows) => {
+        listCates = rows;
+    });
     
+    const data = {
+        title: 'Categories',
+        success: req.session.success,
+        exists: req.session.existName,
+        errors: req.session.errors,
+        cate: cates,
+        listCate: listCates
+    }  
+    res.render('categories/index', data);
 }
 
 exports.addCate = (req, res) => {

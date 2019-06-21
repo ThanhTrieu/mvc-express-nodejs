@@ -1,9 +1,13 @@
 <% layout('../boilerplate') -%>
+<% stylesheet('/css/selectize.css') -%>
+<% script('https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js') -%>
 <% script('/js/ckeditor5.js') -%>
+<% script('js/selectize.min.js') -%>
 <% script('/js/post-tags.js') -%>
 <% script('/js/upload-avatar.js') -%>
-<form action="/post" method="post" enctype="multipart/form-data">
-    <h3><%= title %></h3>
+
+<h3><%= title %></h3>
+<form action="/add-post" method="post">
     <div class="row border py-3">
         <div class="col-xl-9 col-lg-9 border-right">
             <div class="form-group">
@@ -16,7 +20,6 @@
             </div>
             <div class="form-group">
                 <label for="avatar">Avatar</label>
-                <%/* <input type="file" name="avatar" id="avatar" class="form-control" accept="image/png, image/jpg, image/jpeg, image/gif, image/bmp"/> */%>
                 <input type="file" name="avatar" id="avatar" class="form-control"/>
                 <input type="hidden" name="hiddenAvatar" id="hiddenAvatar" class="form-control"/>
             </div>
@@ -38,7 +41,7 @@
             </div>
             <div class="form-group">
                 <label for="categories">Categories</label>
-                <select class="form-control" id="categories" name="categories">
+                <select id="categories" name="categories" class="form-control">
                     <option value=""> --- categories -- </option>
                     <% for(let i = 0; i < listCate.length; i++) { %>
                     <option value="<%= listCate[i].id %>"><%= listCate[i].name %></option>
@@ -47,7 +50,12 @@
             </div>
             <div class="form-group">
                 <label for="tags">Tags</label>
-                <input type="text" class="form-control" id="tags" name="tags">
+                <select class="demo-default" id="tags" name="tags[]" multiple>
+                    <option value="">-- tags --</option>
+                    <% for(let i=0; i<listTag.length; i++) { %>
+                    <option value="<%= listTag[i] %>"><%= listTag[i] %></option>
+                    <% } %>
+                </select>
             </div>
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="publishPost" checked="checked"> 
@@ -57,3 +65,5 @@
         </div>
     </div>
 </form>
+
+

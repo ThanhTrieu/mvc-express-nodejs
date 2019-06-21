@@ -1,3 +1,5 @@
+"use strict";
+
 exports.index = (req, res) => {  
     const header = {
         title: 'Dashboard'
