@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npm start"
+    "start": "npm run build && node app.js"
   },
   "dependencies": {
     "array-to-tree": "^3.3.0",
