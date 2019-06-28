@@ -1,4 +1,4 @@
-CKEDITOR.replace('data-content',{
+CKEDITOR.replace('dataContent',{
     height: 500,
     width: '100%'
 });

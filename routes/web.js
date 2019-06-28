@@ -7,9 +7,18 @@ const posts = require('../app/controllers/post');
 const tags = require('../app/controllers/tags');
 const test = require('../app/controllers/test');
 const email = require('../app/controllers/sendmail');
+const chat = require('../app/controllers/chat');
 
 // app/routes.js
 module.exports = function(app, passport) {
+
+	// golbal username
+	app.get('/*', function(req, res, next) {
+		if(req.session.user){
+			res.locals.usernameGolbal = req.session.user;
+		}
+		next();
+	});
 
 	// =====================================
 	// HOME PAGE (with login links) ========
@@ -69,7 +78,7 @@ module.exports = function(app, passport) {
 	// =====================================
 	// POST PAGE ========
 	// =====================================
-	app.get('/create-post', isLoggedIn, posts.index);
+	app.get('/create-post/:state?', isLoggedIn, posts.index);
 	app.post('/add-post', isLoggedIn, posts.createPost);
 	app.post('/upload-avatar', isLoggedIn, posts.upLoadAvatar);
 	// app.get('/edit-post/:slug/:idPost', isLoggedIn, posts.createPost);
@@ -86,6 +95,13 @@ module.exports = function(app, passport) {
 	//=====================================
 	app.get('/send-email', isLoggedIn, email.index);
 	app.post('/send-mail', isLoggedIn, email.sendEmail);
+
+
+	//======================================
+	// CHAT SOCKET IO
+	//=====================================
+	app.get('/chat-io', isLoggedIn, chat.index);
+
 
 	// =====================================
 	// LOGOUT ==============================

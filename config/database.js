@@ -1,9 +1,9 @@
 // config/database.js
 module.exports = {
     'connection': {
-        'host': 'localhost',
-        'user': 'root',
-        'password': ''
+        'host': 'https://www.db4free.net',
+        'user': 'thanhtrieu1990',
+        'password': 'thanhtrieu1990'
     },
-	'database': 'express'
+	'database': 'chats_nodejs'
 };

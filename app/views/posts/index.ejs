@@ -7,6 +7,11 @@
 <% script('/js/upload-avatar.js') -%>
 
 <h3><%= title %></h3>
+<% if(errors) { %>
+    <% for(let i = 0; i < errors.length; i++) { %>
+    <p class="alert alert-danger"><%= errors[i].msg %></p>
+    <% } %>
+<% } %>
 <form action="/add-post" method="post">
     <div class="row border py-3">
         <div class="col-xl-9 col-lg-9 border-right">
@@ -28,7 +33,7 @@
             </div>
             <div class="form-group">
                 <label for="content">Content</label>
-                <textarea  class="form-control" rows="10" id="content" name="data-content"></textarea>
+                <textarea  class="form-control" rows="10" id="content" name="dataContent"></textarea>
             </div>
         </div>
         <div class="col-xl-3 col-lg-3">
@@ -58,8 +63,8 @@
                 </select>
             </div>
             <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="publishPost" checked="checked"> 
-                <label class="form-check-label" for="publishPost" name="publishPost"><b>Publish Post</b></label>
+                <input type="checkbox" class="form-check-input" id="publishPost" name="publishPost" checked="checked"> 
+                <label class="form-check-label" for="publishPost"><b>Publish Post</b></label>
             </div>
             <button type="submit" class="btn btn-primary">Save</button>
         </div>

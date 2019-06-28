@@ -103,7 +103,6 @@ module.exports = function(passport, app) {
                 req.session.id   = rows[0].id;
                 req.session.role = rows[0].role;
                 // all is well, return successful user
-                app.locals.usernameGolbal = rows[0].username;
                 return done(null, rows[0]);
             });
         })
