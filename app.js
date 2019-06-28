@@ -10,6 +10,7 @@ const MySQLStore = require('express-mysql-session')(session);
 const engine = require('ejs-blocks');
 const expressValidator = require('express-validator');
 const paginate = require('express-paginate');
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 
@@ -108,5 +109,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+app.listen(PORT,'0.0.0.0', () => console.log(`Listening on ${ PORT }`));
 
 module.exports = app;
