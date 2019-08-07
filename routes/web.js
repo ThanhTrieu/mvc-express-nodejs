@@ -8,6 +8,7 @@ const tags = require('../app/controllers/tags');
 const test = require('../app/controllers/test');
 const email = require('../app/controllers/sendmail');
 const chat = require('../app/controllers/chat');
+const service = require('../app/controllers/services/todo');
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -102,6 +103,12 @@ module.exports = function(app, passport) {
 	//=====================================
 	app.get('/chat-io', isLoggedIn, chat.index);
 
+
+	//======================================
+	// SERVICE FOR APP TODO
+	//=====================================
+	app.post('/service/v1/add-todo',service.addTodo);
+	app.get('/service/v1/get-type-work', service.getDataTypeWork);
 
 	// =====================================
 	// LOGOUT ==============================

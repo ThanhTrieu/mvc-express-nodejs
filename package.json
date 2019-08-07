@@ -29,6 +29,7 @@
     "gm": "^1.23.1",
     "http-errors": "~1.6.3",
     "image-size": "^0.7.4",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "morgan": "~1.9.1",
