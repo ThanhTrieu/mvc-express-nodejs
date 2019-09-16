@@ -10,8 +10,16 @@ const MySQLStore = require('express-mysql-session')(session);
 const engine = require('ejs-blocks');
 const expressValidator = require('express-validator');
 const paginate = require('express-paginate');
+const Router = require('named-routes');
 
+// Import the library:
+const cors = require('cors');
 const app = express();
+app.use(cors());
+
+const router = new Router();
+router.extendExpress(app);
+router.registerAppHelpers(app);
 
 const passport = require('passport');
 const flash    = require('connect-flash');
