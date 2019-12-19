@@ -15,6 +15,16 @@ const Router = require('named-routes');
 // Import the library:
 const cors = require('cors');
 const app = express();
+
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
+app.use(function(req, res, next){
+  res.io = io;
+  next();
+});
+
+// cors other domain 
 app.use(cors());
 
 const router = new Router();
@@ -117,4 +127,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+module.exports = {app: app, server: server};;

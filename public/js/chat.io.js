@@ -4,11 +4,11 @@ var app = {
 
   rooms: function(){
 
-    var socket = io('/rooms', { transports: ['websocket'] });
+    var socket = io('http://localhost:5000/admin/chat/', { transports: ['websocket'] });
 
     // When socket connects, get a list of chatrooms
     socket.on('connect', function () {
-
+      console.log('love you !');
       // Update rooms list upon emitting updateRoomsList event
       socket.on('updateRoomsList', function(room) {
 
@@ -22,7 +22,8 @@ var app = {
       });
 
       // Whenever the user hits the create button, emit createRoom event.
-      $('.room-create button').on('click', function(e) {
+      $('.room-create').on('click', function(e) {
+        console.log('fuck');
         var inputEle = $("input[name='title']");
         var roomTitle = inputEle.val().trim();
         if(roomTitle !== '') {
@@ -36,7 +37,7 @@ var app = {
 
   chat: function(roomId, username){
     
-    var socket = io('/chatroom', { transports: ['websocket'] });
+    var socket = io('http://localhost:5000/', { transports: ['websocket'] });
 
       // When socket connects, join the current chatroom
       socket.on('connect', function () {
@@ -170,3 +171,6 @@ var app = {
     }
   }
 };
+
+// using app
+app.rooms();

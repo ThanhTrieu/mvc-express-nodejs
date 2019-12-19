@@ -5,6 +5,7 @@ const xssFilters = require('xss-filters');
 const paginate = require('express-paginate');
 
 exports.index = async (req, res) => {  
+
     let keyword = req.query.key;
     keyword = xssFilters.inHTMLData(keyword);
 
@@ -30,7 +31,6 @@ exports.index = async (req, res) => {
     .then(rows => {
         posts = rows;
     }); 
-    
     const data = {
         title: 'Dashboard',
         pageCount: pageCount,

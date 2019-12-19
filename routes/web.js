@@ -25,16 +25,17 @@ const corsOptions = {
 
 // app/routes.js
 module.exports = function(app, passport) {
-	app.group("/admin", (app) => {
+	
 
+	app.group("/admin", (app) => {
 		// golbal username
 		app.get('/*', function(req, res, next) {
 			if(req.session.user){
+				console.log(req.session.user)
 				res.locals.usernameGolbal = req.session.user;
 			}
 			next();
 		});
-
 		// =====================================
 		// HOME PAGE (with login links) ========
 		// =====================================
@@ -45,34 +46,6 @@ module.exports = function(app, passport) {
 		// =====================================
 		// show the login form
 		app.get('/login', login.login);
-
-		// process the login form
-		app.post('/login', passport.authenticate('local-login', {
-							successRedirect : 'admin/dashboard', // redirect to the secure profile section
-							failureRedirect : 'admin/login', // redirect back to the signup page if there is an error
-							failureFlash : true // allow flash messages
-			}),
-			function(req, res) {
-					if (req.body.remember) {
-						req.session.cookie.maxAge = 1000 * 60 * 3;
-					} else {
-						req.session.cookie.expires = false;
-					}
-			res.redirect('/');
-		});
-
-		// =====================================
-		// SIGNUP ==============================
-		// =====================================
-		// show the signup form
-		app.get('/signup', login.register);
-
-		// process the signup form
-		app.post('/signup', passport.authenticate('local-signup', {
-			successRedirect : 'admin/dashboard', // redirect to the secure profile section
-			failureRedirect : 'admin/signup', // redirect back to the signup page if there is an error
-			failureFlash : true // allow flash messages
-		}));
 
 		// =====================================
 		// DASHBOARD SECTION =========================
@@ -115,7 +88,7 @@ module.exports = function(app, passport) {
 		//======================================
 		// CHAT SOCKET IO
 		//=====================================
-		app.get('/chat-io', isLoggedIn, chat.index);
+		app.get('/chat', isLoggedIn, chat.index);
 
 
 		//======================================
@@ -133,19 +106,44 @@ module.exports = function(app, passport) {
 			req.session.destroy(); // delete session in database
 			res.redirect('/admin/login');
 		});
-
-
-		// route middleware to make sure
-		function isLoggedIn(req, res, next) {
-
-			// if user is authenticated in the session, carry on
-			if (req.isAuthenticated()) {
-				return next();
-			}
-
-			// if they aren't redirect them to the home page
-			res.redirect('/admin/login');
-		}
-
 	});
+
+	// process the login form
+	app.post('/admin/login', passport.authenticate('local-login', {
+		successRedirect : '/admin/dashboard', // redirect to the secure profile section
+		failureRedirect : '/admin/login', // redirect back to the signup page if there is an error
+		failureFlash : true // allow flash messages
+	}),
+	function(req, res) {
+			if (req.body.remember) {
+				req.session.cookie.maxAge = 1000 * 60 * 3;
+			} else {
+				req.session.cookie.expires = false;
+			}
+		res.redirect('/');
+	});
+
+
+	// =====================================
+	// SIGNUP ==============================
+	// =====================================
+	// show the signup form
+	app.get('/admin/signup', login.register);
+
+	// process the signup form
+	app.post('/admin/signup', passport.authenticate('local-signup', {
+		successRedirect : '/admin/dashboard', // redirect to the secure profile section
+		failureRedirect : '/admin/signup', // redirect back to the signup page if there is an error
+		failureFlash : true // allow flash messages
+	}));
+
+	// route middleware to make sure
+	function isLoggedIn(req, res, next) {
+		// if user is authenticated in the session, carry on
+		if (req.isAuthenticated()) {
+			return next();
+		}
+		// if they aren't redirect them to the home page
+		res.redirect('/admin/login');
+	}
 }
