@@ -1,5 +1,5 @@
 const home = require('../frontend/controllers/home');
 
 module.exports = function(app) {
-    app.get("/home", home.index);
+    app.get("/", home.index);
 };
