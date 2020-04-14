@@ -82,7 +82,7 @@ module.exports = function(app, passport) {
 		// SEND EMAIL
 		//=====================================
 		app.get('/send-email', isLoggedIn, email.index);
-		app.post('/send-mail', isLoggedIn, email.sendEmail);
+		//app.post('/send-mail-post', isLoggedIn, email.sendEmail);
 
 
 		//======================================
@@ -107,6 +107,9 @@ module.exports = function(app, passport) {
 			res.redirect('/admin/login');
 		});
 	});
+
+	//app.get('/send-email', isLoggedIn, email.index);
+	app.post('/send-mail-post', isLoggedIn, email.sendEmail);
 
 	// process the login form
 	app.post('/admin/login', passport.authenticate('local-login', {
