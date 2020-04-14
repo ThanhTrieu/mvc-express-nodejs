@@ -27,9 +27,9 @@ const corsOptions = {
 module.exports = function(app, passport) {
 	
 
-	app.group("/admin", (app) => {
+	//app.group("/admin", (app) => {
 		// golbal username
-		app.get('/*', function(req, res, next) {
+		app.get('admin/*', function(req, res, next) {
 			if(req.session.user){
 				console.log(req.session.user)
 				res.locals.usernameGolbal = req.session.user;
@@ -39,27 +39,27 @@ module.exports = function(app, passport) {
 		// =====================================
 		// HOME PAGE (with login links) ========
 		// =====================================
-		app.get('/', welcome.index);
+		app.get('/admin/', welcome.index);
 
 		// =====================================
 		// LOGIN ===============================
 		// =====================================
 		// show the login form
-		app.get('/login', login.login);
+		app.get('/admin/login', login.login);
 
 		// =====================================
 		// DASHBOARD SECTION =========================
 		// =====================================
 		// we will want this protected so you have to be logged in to visit
 		// we will use route middleware to verify this (the isLoggedIn function)
-		app.get('/dashboard', isLoggedIn, dashboard.index);
+		app.get('/admin/dashboard', isLoggedIn, dashboard.index);
 		
 
 		// =====================================
 		// CATEGORIES PAGE ========
 		// =====================================
-		app.get('/categories', isLoggedIn, cate.index);
-		app.post('/category-add', isLoggedIn, cate.addCate);
+		app.get('/admin/categories', isLoggedIn, cate.index);
+		app.post('/admin/category-add', isLoggedIn, cate.addCate);
 		// app.get('/category-edit/:slug/:id', isLoggedIn, cate.editCate);
 
 
@@ -75,41 +75,41 @@ module.exports = function(app, passport) {
 		// =====================================
 		// TAG PAGE ========
 		// =====================================
-		app.get('/api/get-all-tags', isLoggedIn, tags.getAllTags);
+		app.get('/admin/api/get-all-tags', isLoggedIn, tags.getAllTags);
 
 
 		//======================================
 		// SEND EMAIL
 		//=====================================
-		app.get('/send-email', isLoggedIn, email.index);
+		app.get('/admin/send-email', isLoggedIn, email.index);
 		//app.post('/send-mail-post', isLoggedIn, email.sendEmail);
 
 
 		//======================================
 		// CHAT SOCKET IO
 		//=====================================
-		app.get('/chat', isLoggedIn, chat.index);
+		app.get('/admin/chat', isLoggedIn, chat.index);
 
 
 		//======================================
 		// SERVICE FOR APP TODO
 		//=====================================
-		app.post('/service/v1/add-todo',service.addTodo);
-		app.get('/service/v1/get-type-work', service.getDataTypeWork);
-		app.get('/service/v1/list-todo', service.listDataWorkTodo);
+		app.post('/admin/service/v1/add-todo',service.addTodo);
+		app.get('/admin/service/v1/get-type-work', service.getDataTypeWork);
+		app.get('/admin/service/v1/list-todo', service.listDataWorkTodo);
 
 		// =====================================
 		// T ==============================
 		// =====================================
-		app.get('/logout', function(req, res) {
+		app.get('/admin/logout', function(req, res) {
 			req.logout();
 			req.session.destroy(); // delete session in database
 			res.redirect('/admin/login');
 		});
-	});
+	//});
 
 	//app.get('/send-email', isLoggedIn, email.index);
-	app.post('/send-mail-post', isLoggedIn, email.sendEmail);
+	app.post('/admin/send-mail-post', isLoggedIn, email.sendEmail);
 
 	// process the login form
 	app.post('/admin/login', passport.authenticate('local-login', {
